@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build files
+frontend/build/
+backend/uploads/
+backend/database.db
+
+# Environment
+.env
