@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/recordings";
+// Use backend URL from env, fallback to localhost
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 function App() {
   const [recordings, setRecordings] = useState([]);
@@ -16,7 +17,7 @@ function App() {
 
   const fetchRecordings = async () => {
     try {
-      const res = await axios.get(API_URL);
+      const res = await axios.get(`${API_URL}/api/recordings`);
       setRecordings(res.data);
     } catch (err) {
       console.error("❌ Error fetching recordings:", err);
@@ -46,7 +47,7 @@ function App() {
         formData.append("video", file);
 
         try {
-          await axios.post(API_URL, formData, {
+          await axios.post(`${API_URL}/api/recordings`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
           });
           fetchRecordings();
@@ -95,7 +96,7 @@ function App() {
             <video
               controls
               width="400"
-              src={`http://localhost:5000/api/recordings/${rec.id}`}
+              src={`${API_URL}/api/recordings/${rec.id}`}
             ></video>
           </div>
         ))
